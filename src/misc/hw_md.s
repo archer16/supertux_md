@@ -125,12 +125,12 @@ init_hardware:
         move.l  d0,(a3)                 /* set tile line */
         dbra    d2,7b
         
-| load sprites
+| load sprites                          /* load sprites */
 
 	move.w	#0x8F02,(a4)
 	move.l	#0x50000000,(a4)
 	lea	sprite_data(pc),a0
-	move.w	#(16*48)-1,d0
+	move.w	#(16*80)-1,d0
 loadsprite:
 	move.w	(a0)+,(a3)
 	dbra	d0,loadsprite
@@ -140,23 +140,21 @@ loadsprite:
         move.l  #0xC0000000,(a4)        /* Load palette #0 */
 	        lea InitVDP_CP0(pc),a0
 	        move.w #16,d0
-        bsr vdp_copy_word
+          bsr vdp_copy_word
         
         move.l  #0xC0200000,(a4)        /* Load palette #1 */
 	        lea InitVDP_CP1(pc),a0
 	        move.w #16,d0
-        bsr vdp_copy_word
+          bsr vdp_copy_word
         
         move.l  #0xC0400000,(a4)        /* Load palette #2 */
-        
-        move.l  #0x0000000A,(a3)        /* entry 32 (black) BGR and 33 (red) */
-        move.l  #0x0EE000CC,(a3)        /* entry 0 (black) and 1 (lt gray) BGR */
-        
-        
+          move.l  #0x0000000A,(a3)        /* entry 32 (black) BGR and 33 (red) */
+          move.l  #0x0EE000CC,(a3)        /* entry 0 (black) and 1 (lt gray) BGR */
+
         move.l  #0xC0600000,(a4)        /* Load palette #3 */
-	        lea vdp_default_cp0(pc),a0
+	        lea vdp_palette_tux_small(pc),a0
 	        move.w #16,d0
-        bsr vdp_copy_word
+          bsr vdp_copy_word
 
 
         move.w  #0x8174,(a4)            /* display on, vblank enabled */
@@ -174,7 +172,7 @@ InitVDPRegs:
         .byte   0x07    /* 8407 => write reg 4 = Name Tbl B = 0xE000 */
         .byte   0x54    /* 8554 => write reg 5 = Sprite Attr Tbl = 0xA800 */
         .byte   0x00    /* 8600 => write reg 6 = always 0 */
-        .byte   0x0E    /* 8700 => write reg 7 = BG color */
+        .byte   0x05    /* 8700 => write reg 7 = BG color */
         .byte   0x00    /* 8800 => write reg 8 = always 0 */
         .byte   0x00    /* 8900 => write reg 9 = always 0 */
         .byte   0x00    /* 8A00 => write reg 10 = HINT = 0 */
@@ -211,21 +209,22 @@ InitVDP_CP0:
 
 InitVDP_CP1:
         .word 0x0E0E
-        .word 0x0EE0
-        .word 0x0EE2
-        .word 0x0EE4
-        .word 0x0EE6
         .word 0x0EE8
-        .word 0x0EEA
         .word 0x0EEC
-        .word 0x0EEE
-        .word 0x0EE0
-        .word 0x0EC0
+        .word 0x0EC6
         .word 0x0EA0
-        .word 0x0E80
-        .word 0x0E60
-        .word 0x0E40
-        .word 0x0E20
+        .word 0x0EEA
+        .word 0x0666
+        .word 0x0EEE
+        
+        .word 0x0000
+        .word 0x0000
+        .word 0x0000
+        .word 0x0000
+        .word 0x0000
+        .word 0x0000
+        .word 0x0000
+        .word 0x0000
 
         .align  2
 
@@ -431,18 +430,6 @@ delay:
         rts
 
 
-|===============================================================================
-|  Not Available from C at this time | ram_copy_word();
-|===============================================================================
-| a0 = pointer to table
-| a3 = pointer to VDP data
-|-------------------------------------------------------------------------------
-    .align 2
-    .global vdp_copy_word
-vdp_copy_word:
-    move.w	(a0)+,(a3)
-    dbra	d0,vdp_copy_word
-    rts
     
     
 

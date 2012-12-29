@@ -50,7 +50,7 @@ supertux_md.bin: ./obj/supertux_md.elf
 
 
 # Main program entry
-./obj/main.o: ./src/main.c ./src/main_clean.c ./src/supertux/tiles.c
+./obj/main.o: ./src/main.c ./src/main_clean.c ./src/supertux/main.c ./src/supertux/tiles.c
 	$(CCC) ./src/main.c -o ./obj/main.o
 
 # Fonts

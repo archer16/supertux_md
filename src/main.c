@@ -4,8 +4,11 @@
 #include "misc/hw_md.h"
 #include "drivers/vdp/vdp.h"
 
-#include "supertux/tiles.c"
+
+//Include some parts
 #include "main_clean.c"
+#include "supertux/tiles.c"
+#include "supertux/main.c"
 
 
 
