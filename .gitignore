@@ -21,3 +21,4 @@
 *.png
 /obj
 /data/images
+/data/supertux_source.txt
