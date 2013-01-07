@@ -43,7 +43,7 @@ function remap() {
   convert $1 +dither -remap $palette $1
 }
 
-#function recolor($image,$colors,$target)
+#function resize($image,$colors,$target_image)
 function resize() {
   solid_colors $1
   scale $1
@@ -55,7 +55,7 @@ function resize() {
   recolor $1 32
   recolor $1 $2
   #remap $1
-  cp $temp/4.png $target/$image_path/small.png
+  cp $1 $target/$image_path/$3
 }
 
 
@@ -71,53 +71,52 @@ convert -size 637x128 canvas:none \
         -draw "image over 0,48,0,0 '$temp/3.png'" \
         -draw "image over 562,48,0,0 'kick-0.png'" \
         $temp/4.png
-        
 resize $temp/4.png 16 small.png
 
 #        -remap $palette \)
-exit
+#exit
 
 #==================================================[ create pack for big tux ]==================================================
 set_path creatures/tux/big
 
 build_pack $temp/1.png "walk-0.png walk-1.png walk-2.png walk-3.png walk-4.png walk-5.png idle-0.png idle-1.png kick-0.png stand-0.png"
 build_pack $temp/2.png "jump-0.png skid-0.png duck-0.png backflip-0.png backflip-1.png backflip-2.png backflip-3.png backflip-4.png buttjump-0.png" 
-convert -size 320x80 canvas:magenta \
+convert -size 640x160 canvas:none \
         -draw "image over 0,0,0,0 '$temp/1.png'" \
-        -draw "image over 0,40,0,0 '$temp/2.png'" \
+        -draw "image over 0,80,0,0 '$temp/2.png'" \
         $temp/4.png
-recolor $temp/4.png 16 big.png        
+resize $temp/4.png 16 big.png    
         
 #==================================================[ create pack for fire tux ]==================================================
 set_path creatures/tux/fire
 
 build_pack $temp/1.png "walk-0.png walk-1.png walk-2.png walk-3.png walk-4.png walk-5.png idle-0.png idle-1.png kick-0.png stand-0.png"
 build_pack $temp/2.png "jump-0.png skid-0.png duck-0.png backflip-0.png backflip-1.png backflip-2.png backflip-3.png backflip-4.png buttjump-0.png" 
-convert -size 320x80 canvas:magenta \
+convert -size 640x160 canvas:none \
         -draw "image over 0,0,0,0 '$temp/1.png'" \
-        -draw "image over 0,40,0,0 '$temp/2.png'" \
+        -draw "image over 0,80,0,0 '$temp/2.png'" \
         $temp/4.png
-recolor $temp/4.png 16 fire.png        
+resize $temp/4.png 16 fire.png        
 
 #==================================================[ create pack for ice tux ]==================================================
 set_path creatures/tux/ice
 
 build_pack $temp/1.png "walk-0.png walk-1.png walk-2.png walk-3.png walk-4.png walk-5.png idle-0.png idle-1.png kick-0.png stand-0.png"
 build_pack $temp/2.png "jump-0.png skid-0.png duck-0.png backflip-0.png backflip-1.png backflip-2.png backflip-3.png backflip-4.png buttjump-0.png" 
-convert -size 320x80 canvas:magenta \
+convert -size 640x160 canvas:magenta \
         -draw "image over 0,0,0,0 '$temp/1.png'" \
-        -draw "image over 0,40,0,0 '$temp/2.png'" \
+        -draw "image over 0,80,0,0 '$temp/2.png'" \
         $temp/4.png
-recolor $temp/4.png 16 ice.png        
+resize $temp/4.png 16 ice.png        
 
 #==================================================[ create pack for snow tile ]==================================================
 set_path tiles/snow
 
 build_pack $temp/1.png "convex.png"
-convert -size 320x80 canvas:magenta \
+convert -size 640x160 canvas:none \
         -draw "image over 0,0,0,0 '$temp/1.png'" \
         $temp/4.png
-recolor $temp/4.png 8 convex.png        
+resize $temp/4.png 16 convex.png        
 
 
 
