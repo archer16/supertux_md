@@ -33,6 +33,11 @@ function recolor() {
   convert $1 +dither -colors $2 $1
 }
 
+#function recolor_staged($image,$colors)
+function recolor_staged() {
+  convert $1 \( \( \( \( +dither -colors 1024 \) +dither -colors 256 \)  +dither -colors 64 \)  +dither -colors 32 \)  +dither -colors $2 $1
+}
+
 #function posterize($image,$level)
 function posterize() {
   convert $1 +dither -posterize $2 $1
@@ -49,11 +54,7 @@ function resize() {
   scale $1
   solid_colors $1
   #posterize $1 6
-  recolor $1 1024
-  recolor $1 256
-  recolor $1 64
-  recolor $1 32
-  recolor $1 $2
+  recolor_staged $1 $2
   #remap $1
   cp $1 $target/$image_path/$3
 }
