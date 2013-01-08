@@ -53,7 +53,6 @@ function resize() {
   solid_colors $1
   scale $1
   solid_colors $1
-  #posterize $1 6
   recolor_staged $1 $2
   #remap $1
   cp $1 $target/$image_path/$3
@@ -104,7 +103,7 @@ set_path creatures/tux/ice
 
 build_pack $temp/1.png "walk-0.png walk-1.png walk-2.png walk-3.png walk-4.png walk-5.png idle-0.png idle-1.png kick-0.png stand-0.png"
 build_pack $temp/2.png "jump-0.png skid-0.png duck-0.png backflip-0.png backflip-1.png backflip-2.png backflip-3.png backflip-4.png buttjump-0.png" 
-convert -size 640x160 canvas:magenta \
+convert -size 640x160 canvas:none \
         -draw "image over 0,0,0,0 '$temp/1.png'" \
         -draw "image over 0,80,0,0 '$temp/2.png'" \
         $temp/4.png
