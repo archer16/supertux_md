@@ -8,10 +8,10 @@ genpal=$target/../tools/genesis_palette.php
 source $target/inc.imagebuilder.sh
 
 #import tux sprites
-source $target/inc_import_tux_small.sh
-source $target/inc_import_tux_big.sh
-source $target/inc_import_tux_fire.sh
-source $target/inc_import_tux_ice.sh
+source $target/imb_creatures_small.sh
+source $target/imb_creatures_big.sh
+source $target/imb_creatures_tux_fire.sh
+source $target/imb_creatures_tux_ice.sh
 
 #==================================================[ create pack for snow tile ]==================================================
   set_path tiles/snow
